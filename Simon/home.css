@@ -1,0 +1,17 @@
+#logo {
+  width: 150px;
+}
+
+#dropdownMenu {
+  margin-left: 30px;
+}
+
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.nav-item {
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
