@@ -33,6 +33,10 @@
     text-align: center;
 }
 
+label {
+  text-align:center;
+}
+
 #jumbotron-wrapper {
   background-color: #9ee1e8;
   padding: 20px 0;
@@ -41,6 +45,8 @@
 .content-wrapper{
   max-width: 1200px;
   margin: auto;
+  padding-left: 3%;
+  padding-right: 3%;
 }
 
 #keep-img {

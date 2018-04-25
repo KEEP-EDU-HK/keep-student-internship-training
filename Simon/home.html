@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <link href="home.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <title>Bootstrap page</title>
   </head>
@@ -13,7 +12,7 @@
 
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
-      <div class="container-fluid">
+      <div class="container-fluid content-wrapper">
         <div class="dropdown">
           <a class="navber-brand" id="logoDropdown" href="./home.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img id="logo" src="./assets/Logo_KEEP.png" class="img-responsive" />
@@ -42,15 +41,113 @@
           </ul>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#">Login</a>
+              <a class="nav-link" id="loginIn" href="#">Login</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Sign Up</a>
+              <a class="nav-link" id="signUp">Sign Up</a>
+              <script>
+                // Show sign up modal
+                $('#signUp').on("click",function(){
+                  $('#signUpModal').modal('show');
+                  console.log("sign up modal clicked!");
+                });
+              </script>
             </li>
           </ul>
         </div>
       </div>
     </nav>
+
+    <!-- Sign up modal -->
+    <div id="signUpModal" class="modal fade">
+      <div class="modal-dialog modal-lg">
+        <div enctype="multipart/form-data">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title ">Sign up your account!</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="signUpForm" method="GET" autocomplete="off">
+                <div class="form-group row justify-content-center">
+                  <label for="firstNameField lastNameField" class="col-lg-3 col-form-label">Full Name:</label>
+                  <div class="col-lg-4">
+                    <input class="form-control" type="text" id="firstNameField" placeholder="First Name" autocomplete="given-name">
+                  </div>
+                  <div class="col-lg-4">
+                    <input class="form-control" type="text" id="lastNameField" placeholder="Last Name" autocomplete="family-name">
+                  </div>
+                </div>
+
+                <div class="form-group row justify-content-center">
+                  <label for="userNameField" class="col-lg-3 col-form-label">User Name:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" id="userNameField" placeholder="User Name">
+                  </div>
+                </div>
+
+                <div class="form-group row justify-content-center">
+                  <label for="passwordField" class="col-lg-3 col-form-label">Password:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="password" id="passwordField" placeholder="Password">
+                  </div>
+                </div>
+
+                <div class="form-group row justify-content-center">
+                  <label for="passwordField" class="col-lg-3 col-form-label">Confirm password:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="password" id="passwordField" placeholder="Confirm password">
+                  </div>
+                </div>
+
+                <div class="form-group row justify-content-center">
+                  <label for="emailField" class="col-lg-3 col-form-label">Email:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" id="emailField" placeholder="Emal Address" autocomplete="email">
+                  </div>
+                </div>
+
+                <div class="form-group row justify-content-center">
+                  <label for="phoneField" class="col-lg-3 col-form-label">Phone:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" id="phoneField" placeholder="Phone Number" autocomplete="tel-national">
+                  </div>
+                </div>
+
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" name="cancel" id="cancelButton" class="btn" data-dismiss="modal">Cancel</button>
+              <button type="button" name="submit" id="submitButton" class="btn btn-success">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $('#submitButton').on('click', function(){
+        var data = {};
+        data['firstName'] = $('#firstNameField').val();
+        data['lastName'] = $('#lastNameField').val();
+        data['userName'] = $('#userNameField').val();
+        data['password'] = $('#passwordField').val();
+        data['email'] = $('#emailField').val();
+        data['phoneNumber'] = Number($('#phoneField').val());
+        $.ajax({
+          url: "insert.php",
+          method: "POST",
+          data: JSON.stringify(data),
+          success:function(){
+            alert("You have sign up an account!");
+            $('#signUpForm')[0].reset();
+          }
+        })
+      })
+
+      $('#signUpModal').on('hidden.bs.modal', function(){
+        $('#signUpForm')[0].reset()
+      })
+    </script>
 
     <!-- Slider -->
     <div id="slides" class="carousel slide" data-ride="carousel" data-pause="false">
@@ -80,10 +177,10 @@
     <div class="container-fluid" id="jumbotron-wrapper">
       <div class="content-wrapper">
         <div class="row align-items-center">
-          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+          <div class="col-lg-6">
             <img id="keep-img" src="./assets/home_what.png">
           </div>
-          <div class="col-xl-6 col-lg-5 col-md-12 col-sm-12 col-12">
+          <div class="col-lg-6">
             <div class="jumbotron" id="jumbotron-content">
               <h2>What is KEEP?</h2>
               <h5>Knowledge & Education Exchange Platform</h5>
@@ -94,6 +191,24 @@
               </ul>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Link -->
+    <div class="container-fluid content-wrapper">
+      <div class="row">
+        <div class="col-lg-3">
+          1
+        </div>
+        <div class="col-lg-3">
+          2
+        </div>
+        <div class="col-lg-3">
+          3
+        </div>
+        <div class="col-lg-3">
+          4
         </div>
       </div>
     </div>
